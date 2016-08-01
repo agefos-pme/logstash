@@ -1,0 +1,47 @@
+{
+  "template" : "agefos-kaspersky-*",
+  "settings" : {
+    "number_of_shards" : 2,
+    "number_of_replicas" : 0,
+    "index.cache.field.type" : "soft",
+    "index.refresh_interval" : "5s",
+    "index.store.compress.stored" : true,
+    "index.query.default_field" : "message",
+    "index.routing.allocation.total_shards_per_node" : 2
+  },
+  "mappings" : {
+    "_default_" : {
+       "_all" : {"enabled" : false},
+       "dynamic_templates" : [ {
+         "message_field" : {
+           "match" : "message",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       }, {
+         "string_fields" : {
+           "match" : "*",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       } ],
+       "properties" : {
+         "@version": { "type": "string", "index": "not_analyzed" },
+         "@timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "timestamp_real" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "kaspersky_count" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "kaspersky_event_id" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "kaspersky_record_number" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "kaspersky_workstation_ip" : { "type": "ip" },
+         "kaspersky_level" : { "type": "string", "include_in_all": false, "index": "no" },
+         "kaspersky_log_name" : { "type": "string", "include_in_all": false, "index": "no" },
+         "kaspersky_source_name" : { "type": "string", "include_in_all": false, "index": "no" },
+         "kaspersky_virus_path" : { "type": "string", "include_in_all": false, "index": "no" }
+      }
+    }
+  }
+}

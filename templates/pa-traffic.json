@@ -1,0 +1,83 @@
+{
+  "template" : "agefos-pa-traffic-*",
+  "settings" : {
+    "number_of_shards" : 2,
+    "number_of_replicas" : 0,
+    "index.cache.field.type" : "soft",
+    "index.refresh_interval" : "5s",
+    "index.store.compress.stored" : true,
+    "index.query.default_field" : "message",
+    "index.routing.allocation.total_shards_per_node" : 2
+  },
+  "mappings" : {
+    "_default_" : {
+       "_all" : {"enabled" : false},
+       "dynamic_templates" : [ {
+         "message_field" : {
+           "match" : "message",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       }, {
+         "string_fields" : {
+           "match" : "*",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       } ],
+       "properties" : {
+         "@version": { "type": "string", "index": "not_analyzed" },
+         "@timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_real_timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_src_ip" : { "type": "ip" },
+         "pa_traffic_dst_ip" : { "type": "ip" },
+         "pa_traffic_nat_src_ip" : { "type": "ip" },
+         "pa_traffic_nat_dst_ip" : { "type": "ip" },
+         "pa_traffic_bytes_received" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_bytes_sent" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_bytes_total" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_pkts_received" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_pkts_sent" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_pkts_total" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_direction" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_session_dst_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_session_src_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_session_elpased_time" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_session_repeat_count" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_nat_dst_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_nat_src_port" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_seq_num" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_serial" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "pa_traffic_session_id" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "geoip"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         },
+         "pa_traffic_srcgeoip"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         },
+         "pa_traffic_dst_geoip"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+          }
+       }
+    }
+  }
+}

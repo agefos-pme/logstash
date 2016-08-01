@@ -1,0 +1,69 @@
+{
+  "template" : "agefos-ssh-*",
+  "settings" : {
+    "number_of_shards" : 2,
+    "number_of_replicas" : 0,
+    "index.cache.field.type" : "soft",
+    "index.refresh_interval" : "5s",
+    "index.store.compress.stored" : true,
+    "index.query.default_field" : "message",
+    "index.routing.allocation.total_shards_per_node" : 2
+  },
+  "mappings" : {
+    "_default_" : {
+       "_all" : { "enabled" : true },
+       "dynamic_templates" : [ {
+         "message_field" : {
+           "match" : "message",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       }, {
+         "string_fields" : {
+           "match" : "*",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       } ],
+       "properties" : {
+         "@version": { "type": "string", "index": "not_analyzed" },
+         "@timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "timestamp_real" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "ssh_authentication_number_attempt_failure" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "ssh_pid" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "ssh_uid" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "ssh_user_uid" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "ssh_user_euid" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "ssh_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "geoip"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         },
+         "SourceGeo"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         },
+         "DestinationGeo"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         }
+       }
+    }
+  }
+}

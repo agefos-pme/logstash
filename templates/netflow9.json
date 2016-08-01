@@ -1,0 +1,61 @@
+{
+  "template" : "netflow9-*",
+  "settings" : {
+    "number_of_shards" : 2,
+    "number_of_replicas" : 0,
+    "index.cache.field.type" : "soft",
+    "index.refresh_interval" : "5s",
+    "index.store.compress.stored" : true,
+    "index.query.default_field" : "message",
+    "index.routing.allocation.total_shards_per_node" : 2
+  },
+  "mappings" : {
+    "_default_" : {
+       "_all" : {"enabled" : false},
+       "dynamic_templates" : [ {
+         "message_field" : {
+           "match" : "message",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       }, {
+         "string_fields" : {
+           "match" : "*",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       } ],
+       "properties" : {
+         "@version": { "type": "string", "index": "not_analyzed" },
+         "@timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "version" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "flow_seq_num" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "flowset_id" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "last_switched" : { "type": "date", "format": "date_optional_time", "index": "not_analyzed", "omit_norms" : true, "doc_values": true },
+         "first_switched" : { "type": "date", "format": "date_optional_time", "index": "not_analyzed", "omit_norms" : true, "doc_values": true },
+         "in_bytes" : { "type": "byte", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "in_pkts" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "input_snmp" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "output_snmp" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "ipv4_dst_addr" : { "type": "ip" },
+         "ipv4_src_addr" : { "type": "ip" },
+         "protocol" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "src_tos" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "l4_dst_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "l4_src_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "flow_sampler_id" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "ipv4_next_hop" : { "type": "ip" },
+         "dst_mask" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "src_mask" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "tcp_flags" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "dst_as" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "src_as" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "host" : { "type": "ip" }
+      }
+    }
+  }
+}

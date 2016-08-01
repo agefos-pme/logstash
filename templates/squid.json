@@ -1,0 +1,71 @@
+{
+  "template" : "agefos-squid-*",
+  "settings" : {
+    "number_of_shards" : 2,
+    "number_of_replicas" : 0,
+    "index.cache.field.type" : "soft",
+    "index.refresh_interval" : "5s",
+    "index.store.compress.stored" : true,
+    "index.query.default_field" : "message",
+    "index.routing.allocation.total_shards_per_node" : 2
+  },
+  "mappings" : {
+    "_default_" : {
+       "_all" : {"enabled" : false},
+       "dynamic_templates" : [ {
+         "message_field" : {
+           "match" : "message",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       }, {
+         "string_fields" : {
+           "match" : "*",
+           "match_mapping_type" : "string",
+           "mapping" : {
+             "type" : "string", "index" : "not_analyzed", "omit_norms" : true, "doc_values" : true
+           }
+         }
+       } ],
+       "properties" : {
+         "@version": { "type": "string", "index": "not_analyzed" },
+         "@timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "squid_real_timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "squid_request_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "squid_cache_value" : { "type": "integer", "include_in_all": false, "index": "no" },
+         "squid_http_status_code" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "squid_bit_transaction" : { "type": "long", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
+         "squid_http_version" : { "type": "float", "include_in_all": false, "index": "no" },
+         "squid_request_param" : { "type": "string", "include_in_all": false, "index": "no" },
+         "squid_request_url_resolved" : { "type": "ip" },
+         "squid_ip_client" : { "type": "ip" },
+         "geoip"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         },
+         "squid_src_geoip"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         },
+         "squid_dst_geoip"  : {
+           "type" : "object",
+             "dynamic": true,
+             "path": "full",
+             "properties" : {
+               "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
+             }
+         }
+      }
+    }
+  }
+}

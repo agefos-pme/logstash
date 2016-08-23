@@ -1,0 +1,7 @@
+SQUID_SYSLOG_PRI (?:<%{POSINT:squid_syslog_pri}>)?
+
+SQUID_TIMESTAMP (?:%{MONTHDAY}/%{MONTHNUM}/%{YEAR} %{TIME})
+
+SQUID_MESSAGE %{SQUID_SYSLOG_PRI}%{IPORHOST:squid_ip_or_host_src}\[%{PROG:squid_syslog_program}\](?::)? %{IP:squid_ip_client} \-(?: %{USER:squid_username})? \[%{SQUID_TIMESTAMP:squid_timestamp}\] (?:\\)?\"%{WORD:squid_request_method} (%{URIPROTO:squid_http_proto}://)?%{IPORHOST:squid_request_url}(?::%{POSINT:squid_request_port})?(?:%{NOTSPACE:squid_request_param})? HTTP/%{BASE16FLOAT:squid_http_version}(?:\\)?\" %{NUMBER:squid_http_status_code} \- %{GREEDYDATA:squid_request_category} \- %{IPORHOST:squid_request_ip_or_domain} \-(?: \- \- %{NUMBER:squid_bit_transaction}| %{INT:squid_cache_value} \- %{NUMBER:squid_bit_transaction})
+
+SQUID_MESSAGE_OLD <%{POSINT:squid_syslog_pri}>%{IPORHOST:squid_ip_or_host_src}\[%{PROG:squid_syslog_program}\](?::)? %{IP:squid_ip_client} \-(?: %{USER:squid_username})? \[(?<squid_timestamp>%{MONTHDAY}/%{MONTHNUM}/%{YEAR} %{TIME})\] (?:\\)?\"%{WORD:squid_request_method} (%{URIPROTO:squid_http_proto}://)?%{IPORHOST:squid_request_url}(?::%{POSINT:squid_request_port})?(?:%{NOTSPACE:squid_request_param})? HTTP/%{BASE16FLOAT:squid_http_version}(?:\\)?\" %{NUMBER:squid_http_status_code} \- %{GREEDYDATA:squid_request_category} \- %{IPORHOST:squid_request_ip_or_domain} \-(?: \- \- %{NUMBER:squid_bit_transaction}| %{INT:squid_cache_value} \- %{NUMBER:squid_bit_transaction})

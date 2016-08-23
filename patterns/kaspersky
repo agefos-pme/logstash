@@ -1,0 +1,17 @@
+FR_DAY \b(?:[Ll]un(?:di)?|[Mm]ar(?:di)?|[Mm]er(?:credi)?|[Jj]eu(?:di)?|[Vv]en(?:dredi)?|[Ss]am(?:edi)?|[Dd]imanche)\b
+
+FR_MONTH \b(?:[Jj]an(?:vier)?|[Ff]ev(?:rier)?|[Mm]ar(?:s)?|[Aa]vril|[Mm]ai|[Jj]uin|[Jj]uillet|[Aa]out|[Ss]ep(?:tembre)?|[Oo]ct(?:bre)?|[Nn]ov(?:embre)?|[Dd]ec(?:embre)?)\b
+
+KASPERSKY_DATE_FRENCH %{FR_DAY} %{MONTHDAY} %{FR_MONTH} %{YEAR} %{TIME}
+
+KASPERSKY_WORKSTATION_RISK_MESSAGE %{HOSTNAME:kaspersky_server} \[%{KASPERSKY_DATE_FRENCH:kaspersky_timestamp} \(%{GREEDYDATA}\)\]: L'état (?:du poste|de l'ordinateur) \"%{HOSTNAME:kaspersky_workstation}\" (?:a changé à|est devenu) \"%{WORD:kaspersky_risk_state}\" : %{GREEDYDATA:kaspersky_risk_status}.
+
+KASPERSKY_VIRUS_MESSAGE %{HOSTNAME:kaspersky_workstation} \[%{KASPERSKY_DATE_FRENCH:kaspersky_timestamp} \(%{GREEDYDATA}\)\] \(%{DATA:kaspersky_category}\): Résultat : %{DATA:kaspersky_virus_state} : %{DATA:kaspersky_virus_name} Utilisateur : %{DATA:kaspersky_utilisateur} \((?:Initiateur|Utilisateur actif)\) Objet : %{PATH:kaspersky_virus_path}
+
+KASPERSKY_MALWARE_MESSAGE %{HOSTNAME:kaspersky_workstation} \[%{KASPERSKY_DATE_FRENCH:kaspersky_timestamp} \(%{GREEDYDATA}\)\] \(%{DATA:kaspersky_category}\): Résultat : %{DATA:kaspersky_malware_state} : %{DATA:kaspersky_malware_name} Utilisateur : %{DATA:kaspersky_utilisateur} \((?:Initiateur|Utilisateur actif)\) Objet : %{PATH:kaspersky_malware_path}
+
+KASPERSKY_THREAT_MESSAGE %{HOSTNAME:kaspersky_workstation} \[%{KASPERSKY_DATE_FRENCH:kaspersky_timestamp} \(%{GREEDYDATA}\)\] \(%{DATA:kaspersky_category}\): Résultat : %{DATA:kaspersky_threat_state} : (?:not-a-virus:)?%{DATA:kaspersky_threat_name} Utilisateur : %{DATA:kaspersky_utilisateur} \((?:Initiateur|Utilisateur actif)\) Objet : %{PATH:kaspersky_threat_path}
+
+KASPERSKY_VIRUS_STATE_MESSAGE %{HOSTNAME:kaspersky_workstation} \[%{KASPERSKY_DATE_FRENCH:kaspersky_timestamp} \(%{GREEDYDATA}\)\] \(%{DATA:kaspersky_category}\): Résultat : %{DATA:kaspersky_virus_state}(?:: %{DATA:kaspersky_virus_name})? Objet : %{GREEDYDATA:kaspersky_virus_status}
+
+KASPERSKY_ATTACK_ALERT_MESSAGE %{HOSTNAME:kaspersky_server} \[%{KASPERSKY_DATE_FRENCH:kaspersky_timestamp} \(%{GREEDYDATA}\)\]: %{GREEDYDATA:kaspersky_attack_alert}

@@ -1,0 +1,50 @@
+SSH_MAIL (?:([\w._\-]+)([\w._\-]+@[a-zA-Z0-9_\-.+]+\.[a-zA-Z0-9_\-.+]+))
+
+SSH_SYSLOG_PRI (?:<%{POSINT:syslog_pri}>)?
+
+SSH_TIMESTAMP %{SYSLOGTIMESTAMP:ssh_timestamp}
+
+SSH_IP_OR_HOST %{IPORHOST:ssh_source_ip_or_host}
+
+SSH_SYSLOG_PROG %{SYSLOGPROG:ssh_program_and_pid}:
+
+SSH_PAM_TYPE %{WORD:ssh_pam_module}(?:(?<ssh_pam_mechanism>(?:\(%{GREEDYDATA}:%{WORD}\))):?|(?:\[%{POSINT:ssh_pam_pid}\]):?)
+SSH_PAM_TYPE3 %{WORD:ssh_pam_module}(?:(?<ssh_pam_mechanism>(?:\(%{WORD}:%{WORD}\))):?|(?:\[%{POSINT:ssh_pam_pid}\]):?)
+SSH_PAM_TYPE2 %{WORD:ssh_pam_module}(?:\(%{DATA:ssh_pam_type}\):)
+
+SSH_VALID_INVALID %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} (?<ssh_method_state>Accepted|Failed)(?: %{WORD:ssh_method} for)?(?: ((?:(invalid|illegal)) user %{USER:ssh_user}|%{USER:ssh_user}))? from %{IPORHOST:ssh_client_ip} port %{NONNEGINT:ssh_port}(?: %{WORD:ssh_version})?
+
+SSH_PAM_SESSION %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{SSH_PAM_TYPE} session %{WORD:ssh_session_state} for user %{USER:ssh_user}(?: by %{USER:ssh_user_logname}?\(uid=%{NONNEGINT:ssh_uid})?
+SSH_PAM_SESSION2 %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{SSH_PAM_TYPE} session %{WORD:ssh_session_state} for user %{USER:ssh_user}(?: by \(uid=%{NONNEGINT:ssh_user_uid}\))?
+
+SSH_CHECK_PAM_PASSWD %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{WORD:ssh_method} check %{WORD:ssh_check_state} for user \(%{USER:ssh_user}\)
+
+SSH_AUTH_FAILURE %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{SSH_PAM_TYPE} authentication %{WORD:ssh_authentication_status}; logname=(?:%{USER:ssh_logname}|\s*)uid=%{NONNEGINT:ssh_user_uid} euid=%{NONNEGINT:ssh_user_euid} tty=(?<ssh_tty>%{WORD}(?:/%{NONNEGINT})?) ruser=(?:%{USER:ssh_ruser}|\s*)rhost=%{IPORHOST:ssh_client_host}(?:%{SPACE}{1,2}user=%{USER:ssh_user})?
+
+SSH_AUTH_FAILURE_DOMAIN %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{SSH_PAM_TYPE} authentication %{WORD:ssh_authentication_status} for \'%{USER:ssh_user}\' \(%{SSH_MAIL:ssh_user_domain}\): %{GREEDYDATA:ssh_authentication_reason}
+
+SSH_CONNECTION_STATE %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} Connection %{WORD:ssh_connection_state} by %{IPORHOST:ssh_client_ip}
+
+#SSH_DISCONNECT %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} Received disconnect from %{IPORHOST:ssh_ip}: (?<ssh_authentication_reason>Unable to authenticate)
+SSH_DISCONNECT %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} Received disconnect from %{IPORHOST:ssh_ip}: (?:%{INT}: )?%{GREEDYDATA:ssh_disconnect_reason}
+
+#SSH_DISCONNECTING %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{WORD:ssh_authentication_result}: (?<ssh_authentication_reason>Too many authentication failures) for %{USER:ssh_user}
+SSH_DISCONNECTING %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{WORD:ssh_disconnect_result}: (?<ssh_disconnect_reason>Too many authentication failures) for %{USER:ssh_user}
+
+SSH_PAM_AUTH_FAILURE %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} PAM %{NONNEGINT:ssh_authentication_number_attempt_failure} more authentication failure(?:s)?; logname=(?:%{USER:ssh_logname}|\s*)uid=%{NONNEGINT:ssh_user_uid} euid=%{NONNEGINT:ssh_user_euid} tty=(?<ssh_tty>%{WORD}(?:/%{NONNEGINT})?) ruser=(?:%{USER:ssh_ruser}|\s*)rhost=%{IPORHOST:ssh_client_host}(?:%{SPACE}{1,2}user=%{USER:ssh_user})?
+
+SSH_PAM_MAX_RETRIES %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} PAM service\(%{PROG}\) ignoring max retries; %{GREEDYDATA}
+
+SSH_UNKNOW_USER %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{SSH_PAM_TYPE} (?<ssh_authentication_reason>error retrieving information about user) %{USER:ssh_user}
+
+SSH_INVALID_USER %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} (?<ssh_authentication_reason>(?:Invalid|Illegal) user) %{USER:ssh_user} from %{IPORHOST:ssh_client_ip}
+
+SSH_INPUT_USER_AUTH %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} input_userauth_request: (?<ssh_authentication_reason>(?:invalid|illegal) user) %{USER:ssh_user}
+
+SSH_CHECK_PASS_AUTH %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG} %{SSH_PAM_TYPE} (?<ssh_authentication_reason>check pass; user) %{USER:ssh_user}
+
+SSH_SUDO %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG}(?:%{SPACE}{1,2})?%{USER:ssh_logname} : TTY=(?<ssh_tty>%{WORD}(?:/%{NONNEGINT})?) ; PWD=%{PATH:ssh_working_directory_path} ; USER=%{WORD:ssh_user} ; COMMAND=%{GREEDYDATA:ssh_command}
+
+SSH_SU_SESSION %{SSH_SYSLOG_PRI}%{SSH_TIMESTAMP} %{SSH_IP_OR_HOST} %{SSH_SYSLOG_PROG}(?:%{SPACE}{1,2})?%{SSH_PAM_TYPE} session %{WORD:ssh_session_state} for user %{USER:ssh_user}(?: by %{USER:ssh_user_logname}?\(uid=%{NONNEGINT:ssh_uid})?
+
+SSH_MESSAGE (?:%{SSH_VALID_INVALID}|%{SSH_PAM_SESSION}|%{SSH_CHECK_PAM_PASSWD}|%{SSH_AUTH_FAILURE}|%{SSH_AUTH_FAILURE_DOMAIN}|%{SSH_CONNECTION_STATE}|%{SSH_DISCONNECT}|%{SSH_DISCONNECTING}|%{SSH_PAM_AUTH_FAILURE}|%{SSH_PAM_MAX_RETRIES}|%{SSH_INPUT_USER_AUTH}|%{SSH_CHECK_PASS_AUTH})

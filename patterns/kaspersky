@@ -1,6 +1,7 @@
 FR_DAY \b(?:[Ll]un(?:di)?|[Mm]ar(?:di)?|[Mm]er(?:credi)?|[Jj]eu(?:di)?|[Vv]en(?:dredi)?|[Ss]am(?:edi)?|[Dd]imanche)\b
 
-FR_MONTH \b(?:[Jj]an(?:vier)?|[Ff]ev(?:rier)?|[Mm]ar(?:s)?|[Aa]vril|[Mm]ai|[Jj]uin|[Jj]uillet|[Aa]out|[Ss]ep(?:tembre)?|[Oo]ct(?:bre)?|[Nn]ov(?:embre)?|[Dd]ec(?:embre)?)\b
+#FR_MONTH \b(?:[Jj]an(?:vier)?|[Ff]ev(?:rier)?|[Mm]ar(?:s)?|[Aa]vril|[Mm]ai|[Jj]uin|[Jj]uillet|[Aa]out|[Ss]ep(?:tembre)?|[Oo]ct(?:bre)?|[Nn]ov(?:embre)?|[Dd]ec(?:embre)?)\b
+FR_MONTH \b(?:[Jj]an(?:vier)?|[Ff]ev(?:rier)?|[Mm]ar(?:s)?|[Aa]vril|[Mm]ai|[Jj]uin|[Jj]uillet|[Aa]oût|[Ss]ep(?:tembre)?|[Oo]ct(?:bre)?|[Nn]ov(?:embre)?|[Dd]ec(?:embre)?)\b
 
 KASPERSKY_DATE_FRENCH %{FR_DAY} %{MONTHDAY} %{FR_MONTH} %{YEAR} %{TIME}
 

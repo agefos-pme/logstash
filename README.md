@@ -25,4 +25,17 @@ Pour ce faire, il faut disposer des fichiers de configuration de logstash et de 
 
 Pour ce faire, il suffit de:
 
-[Etape1](/docs/etape1.png)
+![Etape1](/docs/etape1.png)
+
+![Etape2](/docs/etape2.png)
+
+## Installation en ligne de commande
+
+Se connecter sur l'hôte:
+
+```shell
+# # Si cela n'a pas été fait auparavant
+# git clone https://github.com/agefos-pme/rancher-catalog
+# cd rancher-catalog/templates/logstash/0
+# rancher-compose up -d
+```

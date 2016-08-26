@@ -9,3 +9,20 @@ Ce projet décrit la configuration des inputs suivants:
 - squid
 - switchs HP
 - palo alto
+
+On retrouvera dans les sous répertoires les informations suivantes:
+
+| repetoire | contenu |
+|---|---|
+| conf.d | Configuration des filtres input/filter
+| geoip | Geolocalisation pour palo alto / squid / cisco
+| patterns | Log message pattern matching
+| templates | Templates output pour communication logstash - elasticsearch
+
+## Installation des fichiers de configuration
+
+Pour ce faire, il faut disposer des fichiers de configuration de logstash et de la définition du conteneur qui se trouve dans le projet [rancher-catalog](/agefos-pme/rancher-catalog/templates/logstash/).
+
+Pour ce faire, il suffit de:
+
+[Etape1](/docs/etape1.png)

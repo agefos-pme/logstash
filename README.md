@@ -12,7 +12,7 @@ Ce projet décrit la configuration des inputs suivants:
 
 On retrouvera dans les sous répertoires les informations suivantes:
 
-| repetoire | contenu |
+| répertoire | contenu |
 |---|---|
 | conf.d | Configuration des filtres input/filter
 | geoip | Geolocalisation pour palo alto / squid / cisco
@@ -27,7 +27,11 @@ Pour ce faire, il suffit de:
 
 ![Etape1](/docs/etape1.png)
 
+Ensuite il faut cliquer sur le bouton "Launch".
+
 ![Etape2](/docs/etape2.png)
+
+> **NB**: Il existe des paramètres supplémentaires (sous forme de questions) permettant d'affiner la configuration par défaut.
 
 ## Installation en ligne de commande
 

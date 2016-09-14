@@ -1,0 +1,5 @@
+SWITCH_HP_SYSLOG_PRI (?:<%{POSINT:swith_hp_syslog_pri}>)?
+
+SWITH_HP_TIMESTAMP (?<swith_hp_timestamp>%{SYSLOGTIMESTAMP} %{YEAR})
+
+SWITCH_HP_MESSAGE %{SWITCH_HP_SYSLOG_PRI}%{SWITH_HP_TIMESTAMP} %{IPORHOST:swith_hp_hostname} (?<switch_hp_vendor>%%%{INT})%{DATA:swith_hp_module}/%{DATA:switch_hp_severity}/%{DATA:switch_hp_mnemonic}: %{GREEDYDATA:switch_hp_content}\.%{GREEDYDATA}

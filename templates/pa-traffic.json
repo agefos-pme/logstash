@@ -56,7 +56,6 @@
          "geoip"  : {
            "type" : "object",
              "dynamic": true,
-             "path": "full",
              "properties" : {
                "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
              }
@@ -64,7 +63,6 @@
          "pa_traffic_srcgeoip"  : {
            "type" : "object",
              "dynamic": true,
-             "path": "full",
              "properties" : {
                "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
              }
@@ -72,7 +70,6 @@
          "pa_traffic_dst_geoip"  : {
            "type" : "object",
              "dynamic": true,
-             "path": "full",
              "properties" : {
                "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
              }

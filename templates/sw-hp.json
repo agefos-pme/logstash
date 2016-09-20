@@ -1,5 +1,5 @@
 {
-  "template" : "sw-hp-*",
+  "template" : "agefos-sw-hp-*",
   "settings" : {
     "number_of_shards" : 2,
     "number_of_replicas" : 0,

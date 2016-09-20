@@ -32,7 +32,7 @@
        "properties" : {
          "@version": { "type": "string", "index": "not_analyzed" },
          "@timestamp" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
-         "timestamp_real" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "pa_threat_timestamp_real" : { "type" : "date", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
          "pa_threat_src_ip" : { "type": "ip" },
          "pa_threat_dst_ip" : { "type": "ip" },
          "pa_threat_nat_src_ip" : { "type": "ip" },

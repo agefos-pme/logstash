@@ -44,7 +44,6 @@
          "geoip"  : {
            "type" : "object",
              "dynamic": true,
-             "path": "full",
              "properties" : {
                "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
              }
@@ -52,7 +51,6 @@
          "squid_src_geoip"  : {
            "type" : "object",
              "dynamic": true,
-             "path": "full",
              "properties" : {
                "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
              }
@@ -60,7 +58,6 @@
          "squid_dst_geoip"  : {
            "type" : "object",
              "dynamic": true,
-             "path": "full",
              "properties" : {
                "location" : { "type" : "geo_point", "lat_lon" : true, "geohash" : true }
              }

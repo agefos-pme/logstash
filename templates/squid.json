@@ -32,7 +32,7 @@
        "properties" : {
          "@version": { "type": "string", "index": "not_analyzed" },
          "@timestamp" : { "type" : "date", "index": "not_analyzed", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
-         "squid_real_timestamp" : { "type" : "date", "index": "not_analyzed", "format" : "date_optional_time", "omit_norms" : true, "doc_values" : true },
+         "squid_real_timestamp" : { "type" : "date", "omit_norms" : true, "doc_values" : true },
          "squid_request_port" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },
          "squid_cache_value" : { "type": "integer", "include_in_all": false, "index": "no" },
          "squid_http_status_code" : { "type": "integer", "index": "not_analyzed", "omit_norms" : true, "doc_values" : true },

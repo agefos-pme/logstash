@@ -12,6 +12,7 @@
   "mappings" : {
     "_default_" : {
        "_all" : {"enabled" : false},
+       "_timestamp" : { "enabled" : true, "store" : true },
        "dynamic_templates" : [ {
          "message_field" : {
            "match" : "message",

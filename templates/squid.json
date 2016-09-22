@@ -1,5 +1,5 @@
 {
-  "template" : "logstash-*",
+  "template" : "agefos-squid-*",
   "settings" : {
     "index.refresh_interval" : "5s"
   },

@@ -34,12 +34,12 @@
         "squid_timestamp" : { "type" : "date", "format": "dd/MM/YYYY HH:mm:ss|| d/MM/YYYY HH:mm:ss" },
         "squid_request_port" : { "type" : "integer", "omit_norms" : true },
         "squid_cache_value" : { "type" : "integer", "include_in_all" : false, "index" : "no" },
-         "squid_http_status_code" : { "type" : "integer", "omit_norms" : true },
-         "squid_bit_transaction" : { "type" : "long", "omit_norms" : true, },
-         "squid_http_version" : { "type" : "float", "include_in_all" : false, "index" : "no" },
-         "squid_request_param" : { "type" : "string", "include_in_all" : false, "index" : "no" },
-         "squid_request_url_resolved" : { "type" : "ip" },
-         "squid_ip_client" : { "type" : "ip" },
+        "squid_http_status_code" : { "type" : "integer", "omit_norms" : true },
+        "squid_bit_transaction" : { "type" : "long", "omit_norms" : true },
+        "squid_http_version" : { "type" : "float", "include_in_all" : false, "index" : "no" },
+        "squid_request_param" : { "type" : "string", "include_in_all" : false, "index" : "no" },
+        "squid_request_url_resolved" : { "type" : "ip" },
+        "squid_ip_client" : { "type" : "ip" },
         "geoip"  : {
           "dynamic": true,
           "properties" : {

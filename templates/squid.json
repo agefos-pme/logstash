@@ -1,13 +1,13 @@
 {
   "template" : "agefos-squid-*",
   "settings" : {
-    "number_of_shards" : 2,
+    "number_of_shards" : 3,
     "number_of_replicas" : 0,
     "index.cache.field.type" : "soft",
     "index.refresh_interval" : "5s",
     "index.store.compress.stored" : true,
     "index.query.default_field" : "message",
-    "index.routing.allocation.total_shards_per_node" : 2
+    "index.routing.allocation.total_shards_per_node" : 3
   },
   "mappings" : {
     "_default_" : {
